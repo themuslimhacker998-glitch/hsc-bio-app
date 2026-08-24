@@ -7,17 +7,7 @@ import PaperPage from './pages/PaperPage.jsx'
 import ExplorePage from './pages/ExplorePage.jsx'
 import AnimationsPage from './pages/AnimationsPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
-import { chaptersByPaper } from './data/chapters.js'
-
-function PlaceholderPage({ title, subtitle }) {
-  return (
-    <div className="container" style={{ paddingTop: '48px' }}>
-      <p className="eyebrow">বাংলাদেশ HSC জীববিজ্ঞান</p>
-      <h1 style={{ marginTop: '8px' }}>{title}</h1>
-      <p className="text-soft" style={{ marginTop: '12px', maxWidth: '720px' }}>{subtitle}</p>
-    </div>
-  )
-}
+import ConfirmEmailPage from './pages/ConfirmEmailPage.jsx'
 
 export default function App() {
   return (
@@ -25,14 +15,14 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/chapter/:chapterSlug" element={<ChapterPage />} />
-        <Route path="/paper/1" element={<PaperPage />} />
-        <Route path="/paper/2" element={<PaperPage />} />
+        <Route path="/paper/:paper" element={<PaperPage />} />
         <Route path="/explore-3d" element={<ExplorePage />} />
         <Route path="/animations" element={<AnimationsPage />} />
         <Route
           path="/chapter/:chapterSlug/visualization/:visualizationId"
           element={<VisualizationDetailPage />}
         />
+        <Route path="/confirm-email" element={<ConfirmEmailPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Layout>

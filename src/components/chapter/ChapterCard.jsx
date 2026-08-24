@@ -4,7 +4,7 @@ import './ChapterCard.css'
 
 export default function ChapterCard({ chapter, progress = 0, style }) {
   return (
-    <Link to={`/chapter/${chapter.slug}`} className="chapter-card fade-in-up" data-accent={chapter.accent} style={style}>
+    <Link to={`/chapter/${chapter.slug}`} className="chapter-card fade-in" data-accent={chapter.accent} style={style}>
       <span className="chapter-card__punch" aria-hidden="true" />
       <div className="chapter-card__accent-bar" aria-hidden="true" />
 

@@ -2,8 +2,7 @@
   position: sticky;
   top: 0;
   z-index: 40;
-  background: color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter: blur(10px);
+  background: var(--bg);
   border-bottom: 1px solid var(--line);
 }
 
@@ -11,77 +10,107 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 20px;
-  padding-top: 16px;
-  padding-bottom: 16px;
-  padding-left: 80px;
-}
-
-.site-header__brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.site-header__wordmark {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.15rem;
-  color: var(--ink);
-  display: flex;
-  flex-direction: column;
-  line-height: 1.1;
-}
-
-.site-header__wordmark-sub {
-  font-family: var(--font-mono);
-  font-weight: 400;
-  font-size: 0.62rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-faint);
-}
-
-.site-header__actions {
-  display: flex;
-  align-items: center;
+  min-height: 48px;
+  padding: 6px 16px;
   gap: 12px;
 }
 
-.site-header__search {
+/* ------------------------------------------------------------------ */
+/* Sidebar toggle — circular, matches lang/theme controls              */
+/* ------------------------------------------------------------------ */
+.sidebar-toggle {
+  z-index: 95;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink);
   display: flex;
   align-items: center;
-  gap: 8px;
-  border: 1px solid var(--line);
-  background: var(--surface);
-  border-radius: 999px;
-  padding: 8px 14px;
-  color: var(--ink-faint);
-  transition: border-color 0.2s var(--ease-out);
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: border-color .15s ease, color .15s ease;
+  padding: 0;
+  flex-shrink: 0;
+}
+.sidebar-toggle:hover {
+  border-color: var(--ink-faint);
+}
+.sidebar-toggle:active {
+  color: var(--ink);
 }
 
-.site-header__search input {
-  border: none;
-  background: transparent;
-  outline: none;
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  color: var(--ink-faint);
-  width: 150px;
+.sidebar-toggle__icon {
+  width: 18px;
+  height: 18px;
 }
 
-.site-header__search input::placeholder {
-  color: var(--ink-faint);
+.sidebar-toggle__line {
+  transition: transform .25s var(--ease-out), opacity .15s ease;
+  transform-origin: center;
 }
 
-.site-header__search input:disabled {
-  cursor: not-allowed;
+/* Hamburger → X animation when sidebar is open */
+.sidebar-toggle.is-active .sidebar-toggle__line--top {
+  transform: translateY(6px) rotate(45deg);
+}
+.sidebar-toggle.is-active .sidebar-toggle__line--mid {
+  opacity: 0;
+}
+.sidebar-toggle.is-active .sidebar-toggle__line--bot {
+  transform: translateY(-6px) rotate(-45deg);
 }
 
-@media (max-width: 640px) {
-  .site-header__inner { padding-left: 68px; }
-  .site-header__search {
-    display: none;
+/* ------------------------------------------------------------------ */
+/* Spacer — pushes actions to the right                                */
+/* ------------------------------------------------------------------ */
+.site-header__spacer {
+  flex: 1;
+}
+
+/* ------------------------------------------------------------------ */
+/* Right column: actions, aligned right                                */
+/* ------------------------------------------------------------------ */
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Mobile (≤767px): tighter padding                                    */
+/* ------------------------------------------------------------------ */
+@media (max-width: 767px) {
+  .site-header__inner {
+    padding: 6px 10px;
+    gap: 8px;
+  }
+  .sidebar-toggle {
+    width: 36px;
+    height: 36px;
+  }
+  .sidebar-toggle__icon {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Tablet (768px–1023px)                                               */
+/* ------------------------------------------------------------------ */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .site-header__inner {
+    padding: 6px 20px;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Desktop (≥1024px): generous padding                                */
+/* ------------------------------------------------------------------ */
+@media (min-width: 1024px) {
+  .site-header__inner {
+    padding: 6px 32px;
   }
 }

@@ -1,20 +1,13 @@
 import { useMemo, useState } from 'react'
 import { chaptersByPaper, CHAPTERS } from '../data/chapters.js'
 import ChapterCard from '../components/chapter/ChapterCard.jsx'
+import { useProgress } from '../hooks/useProgress.js'
 import './HomePage.css'
 
-const STORAGE_KEY = 'hsc-biology-progress-v1'
-
-function readProgress() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}
-  } catch {
-    return {}
-  }
-}
+const FILTER_OPTIONS = ['সব', '১ম পত্র', '২য় পত্র']
 
 export default function HomePage() {
-  const [progress] = useState(readProgress)
+  const { progress } = useProgress()
   const [filter, setFilter] = useState('সব')
 
   const visibleChapters = useMemo(() => {
@@ -33,22 +26,14 @@ export default function HomePage() {
         <div className="container hero__inner">
           <div className="hero__text">
             <p className="eyebrow">এইচএসসি জীববিজ্ঞান • বাংলাদেশ</p>
-            <h1 className="hero__title">জীববিজ্ঞান শেখো <em>চিত্র, নোট ও অনুশীলনে</em>।</h1>
+            <h1 className="hero__title">
+              <span className="hero__title-primary">জীববিজ্ঞান শেখো</span>
+              <span className="hero__title-secondary">চিত্র, নোট ও অনুশীলনে।</span>
+            </h1>
             <p className="hero__description text-soft">
               বাংলাদেশের HSC শিক্ষার্থীদের জন্য অধ্যায়ভিত্তিক একটি সহজ স্টাডি স্পেস।
-              গুরুত্বপূর্ণ চিত্র, সংক্ষিপ্ত নোট এবং ইন্টার‌্যাকটিভ ভিজ্যুয়াল দিয়ে কঠিন বিষয়গুলো বুঝে শেখো।
+              গুরুত্বপূর্ণ চিত্র, সংক্ষিপ্ত নোট এবং ইন্টার্‌যাকটিভ ভিজ্যুয়াল দিয়ে কঠিন বিষয়গুলো বুঝে শেখো।
             </p>
-          </div>
-          <div className="hero__mark" aria-hidden="true">
-            <svg viewBox="0 0 220 220" width="220" height="220">
-              <circle cx="110" cy="110" r="92" fill="none" stroke="var(--line-strong)" strokeWidth="1.5" strokeDasharray="4 8" />
-              <circle cx="110" cy="110" r="64" fill="var(--accent-eosin-soft)" stroke="var(--accent-eosin)" strokeWidth="1.5" />
-              <circle cx="110" cy="110" r="22" fill="var(--accent-eosin)" opacity=".8" />
-              <circle cx="110" cy="110" r="8" fill="var(--surface)" />
-              <circle cx="61" cy="79" r="5" fill="var(--accent-chlorophyll)" />
-              <circle cx="160" cy="82" r="4" fill="var(--accent-hematoxylin)" />
-              <circle cx="158" cy="151" r="5" fill="var(--accent-chlorophyll)" />
-            </svg>
           </div>
         </div>
       </section>
@@ -81,7 +66,7 @@ export default function HomePage() {
             <h2>অধ্যায়গুলো</h2>
           </div>
           <div className="filter-tabs" role="tablist" aria-label="পত্র বাছাই">
-            {['সব', '১ম পত্র', '২য় পত্র'].map((item) => (
+            {FILTER_OPTIONS.map((item) => (
               <button key={item} className={filter === item ? 'active' : ''} onClick={() => setFilter(item)}>
                 {item}
               </button>

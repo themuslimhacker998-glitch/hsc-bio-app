@@ -6,7 +6,7 @@ export default function VisualizationCard({ chapterSlug, visualization, accent, 
   return (
     <Link
       to={`/chapter/${chapterSlug}/visualization/${visualization.id}`}
-      className="viz-card fade-in-up"
+      className="viz-card fade-in"
       data-accent={accent}
       style={style}
     >
