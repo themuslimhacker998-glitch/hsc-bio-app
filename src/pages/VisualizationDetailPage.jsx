@@ -22,7 +22,7 @@ export default function VisualizationDetailPage() {
           <div className="viz-detail__stage-grid" aria-hidden="true" />
           <div className="viz-detail__stage-content">
             <div className="viz-detail__orb">✦</div>
-            <p className="viz-detail__stage-title">ইন্টার‌্যাকটিভ ভিজ্যুয়াল শিগগিরই</p>
+            <p className="viz-detail__stage-title">ইন্টার্‌যাকটিভ ভিজ্যুয়াল শিগগিরই</p>
             <p className="viz-detail__stage-copy text-soft">এই জায়গায় ৩ডি মডেল বা অ্যানিমেটেড চিত্র যুক্ত হবে।</p>
           </div>
         </div>

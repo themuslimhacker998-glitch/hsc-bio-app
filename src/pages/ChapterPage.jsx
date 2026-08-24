@@ -1,35 +1,31 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Navigate, useParams } from 'react-router-dom'
 import { getChapterBySlug } from '../data/chapters.js'
 import Breadcrumbs from '../components/common/Breadcrumbs.jsx'
 import Badge from '../components/common/Badge.jsx'
 import NotesSection from '../components/chapter/NotesSection.jsx'
 import VisualizationsSection from '../components/chapter/VisualizationsSection.jsx'
+import { useProgress } from '../hooks/useProgress.js'
 import './ChapterPage.css'
-
-const STORAGE_KEY = 'hsc-biology-progress-v1'
-
-function saveProgress(slug, value) {
-  try {
-    const current = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...current, [slug]: value }))
-  } catch {}
-}
 
 export default function ChapterPage() {
   const { chapterSlug } = useParams()
   const chapter = getChapterBySlug(chapterSlug)
-  const [progress, setProgress] = useState(() => {
-    try {
-      return Number(JSON.parse(localStorage.getItem(STORAGE_KEY))?.[chapterSlug] || 0)
-    } catch { return 0 }
-  })
+  const { getProgress, updateProgress, loading } = useProgress()
+  const [progress, setProgress] = useState(0)
+
+  // Sync local state with context progress
+  useEffect(() => {
+    if (!loading && chapter) {
+      setProgress(getProgress(chapter.slug))
+    }
+  }, [loading, chapter, getProgress])
 
   if (!chapter) return <Navigate to="/not-found" replace />
 
-  const updateProgress = (value) => {
+  const handleUpdate = (value) => {
     setProgress(value)
-    saveProgress(chapter.slug, value)
+    updateProgress(chapter.slug, value)
   }
 
   return (
@@ -47,11 +43,11 @@ export default function ChapterPage() {
         <div className="chapter-progress-box">
           <div className="chapter-progress-box__top">
             <div><span>এই অধ্যায়ের অগ্রগতি</span><strong>{progress}%</strong></div>
-            <button onClick={() => updateProgress(100)} disabled={progress === 100}>
+            <button onClick={() => handleUpdate(100)} disabled={progress === 100}>
               {progress === 100 ? '✓ অধ্যায় শেষ' : 'অধ্যায় শেষ করেছি'}
             </button>
           </div>
-          <input aria-label="অধ্যায়ের অগ্রগতি" type="range" min="0" max="100" step="10" value={progress} onChange={(e) => updateProgress(Number(e.target.value))} />
+          <input aria-label="অধ্যায়ের অগ্রগতি" type="range" min="0" max="100" step="10" value={progress} onChange={(e) => handleUpdate(Number(e.target.value))} />
         </div>
       </header>
 
