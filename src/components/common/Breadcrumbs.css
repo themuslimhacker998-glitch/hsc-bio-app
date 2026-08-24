@@ -1,0 +1,29 @@
+.breadcrumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+}
+
+.breadcrumbs li {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.breadcrumbs a {
+  color: var(--ink-soft);
+  transition: color 0.2s var(--ease-out);
+}
+
+.breadcrumbs a:hover {
+  color: var(--accent-hematoxylin);
+}
+
+.breadcrumbs__sep {
+  color: var(--line-strong);
+}

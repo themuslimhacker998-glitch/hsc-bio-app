@@ -1,0 +1,7 @@
+.notes-section, .viz-section { margin-bottom:56px; }
+.notes-preview { display:flex; align-items:center; gap:16px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-md); padding:20px; }
+.notes-preview__icon { width:42px; height:42px; display:grid; place-items:center; border-radius:12px; background:var(--accent-soft); color:var(--accent); font-size:1.3rem; }
+.notes-preview h3 { font-size:1.1rem; margin-bottom:4px; }
+.notes-preview p { color:var(--ink-soft); font-size:.92rem; }
+.notes-preview__badge { margin-left:auto; color:var(--accent); font-size:.82rem; font-weight:700; white-space:nowrap; }
+@media(max-width:600px){.notes-preview{align-items:flex-start}.notes-preview__badge{margin-left:0}}

@@ -1,0 +1,26 @@
+.not-found {
+  padding: 100px 24px;
+  max-width: 60ch;
+  text-align: left;
+}
+
+.not-found__title {
+  font-size: clamp(1.8rem, 1.5rem + 1.2vw, 2.4rem);
+  margin: 10px 0 14px;
+}
+
+.not-found__description {
+  font-size: 1rem;
+  margin-bottom: 26px;
+}
+
+.not-found__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--accent-hematoxylin);
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+}

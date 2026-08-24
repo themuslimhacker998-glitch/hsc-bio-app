@@ -1,0 +1,13 @@
+.app-shell { min-height:100vh; }
+.app-content { min-width:0; min-height:100vh; display:flex; flex-direction:column; }
+.app-main { flex:1; padding-bottom:80px; }
+.sidebar-toggle {
+  position:fixed; top:16px; left:16px; z-index:90; width:46px; height:46px; border:1px solid var(--line);
+  border-radius:14px; background:color-mix(in srgb, var(--bg-elevated) 94%, var(--accent-chlorophyll-soft));
+  color:var(--ink); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px;
+  cursor:pointer; box-shadow:var(--shadow-md);
+}
+.sidebar-toggle span { width:20px; height:2px; border-radius:2px; background:currentColor; display:block; }
+.sidebar-backdrop { position:fixed; inset:0; z-index:55; background:hsl(140 20% 8% / .38); opacity:0; pointer-events:none; transition:opacity .2s ease; backdrop-filter:blur(2px); }
+.sidebar-backdrop.is-visible { opacity:1; pointer-events:auto; }
+@media (max-width:720px) { .sidebar-toggle { top:12px; left:12px; } }

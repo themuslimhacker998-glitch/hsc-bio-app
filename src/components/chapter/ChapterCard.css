@@ -1,0 +1,11 @@
+.chapter-card { position:relative; display:flex; flex-direction:column; min-height:315px; background:var(--surface); border:1px solid var(--line); border-radius:var(--radius-md); padding:20px; overflow:hidden; box-shadow:var(--shadow-sm); transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease; }
+.chapter-card:hover { transform:translateY(-4px); box-shadow:var(--shadow-md); border-color:var(--accent); }
+.chapter-card__accent-bar { position:absolute; left:0; top:0; bottom:0; width:4px; background:var(--accent); }
+.chapter-card__punch { position:absolute; right:-35px; top:-35px; width:90px; height:90px; border-radius:50%; background:var(--accent-soft); }
+.chapter-card__header { display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.chapter-card__code { font-size:.78rem; font-weight:700; color:var(--accent); }
+.chapter-card__title { font-size:1.35rem; margin:24px 0 10px; line-height:1.35; }
+.chapter-card__description { font-size:.92rem; line-height:1.7; }
+.chapter-card__progress { margin-top:auto; padding-top:20px; }
+.chapter-card__progress-label strong { color:var(--accent); }
+.chapter-card__footer { display:flex; gap:7px; flex-wrap:wrap; margin-top:16px; }

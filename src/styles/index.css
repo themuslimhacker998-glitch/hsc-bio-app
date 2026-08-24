@@ -1,0 +1,225 @@
+/* ------------------------------------------------------------------ */
+/* Design tokens                                                       */
+/* ------------------------------------------------------------------ */
+:root {
+  /* Light theme — pale sage "paper" with histology-stain accents */
+  --bg: #f2f4ec;
+  --bg-elevated: #fbfcf7;
+  --surface: #ffffff;
+  --ink: #16241c;
+  --ink-soft: #45564c;
+  --ink-faint: #7c8b7e;
+  --line: #d9decc;
+  --line-strong: #c2cab0;
+
+  --accent-eosin: #d8506f;
+  --accent-eosin-soft: #f6dfe4;
+  --accent-hematoxylin: #4a4fa0;
+  --accent-hematoxylin-soft: #e2e2f4;
+  --accent-chlorophyll: #2f7a54;
+  --accent-chlorophyll-soft: #dbeade;
+
+  --shadow-color: 120 30% 15%;
+  --shadow-sm: 0 1px 2px hsl(var(--shadow-color) / 0.08);
+  --shadow-md: 0 6px 20px -6px hsl(var(--shadow-color) / 0.18);
+  --shadow-lg: 0 20px 45px -18px hsl(var(--shadow-color) / 0.28);
+
+  --font-display: 'Noto Sans Bengali', 'SolaimanLipi', 'Vrinda', system-ui, sans-serif;
+  --font-body: 'Noto Sans Bengali', 'SolaimanLipi', 'Vrinda', system-ui, sans-serif;
+  --font-mono: 'Noto Sans Bengali', 'SolaimanLipi', system-ui, sans-serif;
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+
+  --container-width: 1180px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-theme='dark'] {
+  --bg: #0f1712;
+  --bg-elevated: #141e17;
+  --surface: #16211a;
+  --ink: #eef2e8;
+  --ink-soft: #aebbac;
+  --ink-faint: #7c8b7e;
+  --line: #263229;
+  --line-strong: #34423699;
+
+  --accent-eosin: #ef8399;
+  --accent-eosin-soft: #3a2229;
+  --accent-hematoxylin: #9498db;
+  --accent-hematoxylin-soft: #23253f;
+  --accent-chlorophyll: #67c592;
+  --accent-chlorophyll-soft: #16301f;
+
+  --shadow-color: 150 60% 2%;
+  --shadow-sm: 0 1px 2px hsl(var(--shadow-color) / 0.4);
+  --shadow-md: 0 8px 24px -8px hsl(var(--shadow-color) / 0.55);
+  --shadow-lg: 0 24px 55px -20px hsl(var(--shadow-color) / 0.65);
+}
+
+/* ------------------------------------------------------------------ */
+/* Reset                                                               */
+/* ------------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.3s var(--ease-out), color 0.3s var(--ease-out);
+
+  background-image: radial-gradient(circle, var(--line) 1px, transparent 1px);
+  background-size: 26px 26px;
+  background-attachment: fixed;
+}
+
+[data-theme='dark'] body {
+  background-image: radial-gradient(circle, var(--line) 1px, transparent 1px);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.15;
+  margin: 0;
+  color: var(--ink);
+}
+
+p {
+  margin: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--accent-eosin-soft);
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-hematoxylin);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Layout utilities                                                    */
+/* ------------------------------------------------------------------ */
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+  color: var(--ink-faint);
+}
+
+.text-soft {
+  color: var(--ink-soft);
+}
+
+/* ------------------------------------------------------------------ */
+/* Shared accent color mapping (used via data-accent attribute)        */
+/* ------------------------------------------------------------------ */
+[data-accent='eosin'] {
+  --accent: var(--accent-eosin);
+  --accent-soft: var(--accent-eosin-soft);
+}
+[data-accent='hematoxylin'] {
+  --accent: var(--accent-hematoxylin);
+  --accent-soft: var(--accent-hematoxylin-soft);
+}
+[data-accent='chlorophyll'] {
+  --accent: var(--accent-chlorophyll);
+  --accent-soft: var(--accent-chlorophyll-soft);
+}
+
+/* ------------------------------------------------------------------ */
+/* Animations                                                          */
+/* ------------------------------------------------------------------ */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fade-in-up {
+  animation: fade-in-up 0.6s var(--ease-out) both;
+}
+
+.fade-in {
+  animation: fade-in 0.5s var(--ease-out) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
