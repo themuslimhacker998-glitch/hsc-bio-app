@@ -25,8 +25,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/chapter/:chapterSlug" element={<ChapterPage />} />
-        <Route path="/paper/1" element={<PaperPage />} />
-        <Route path="/paper/2" element={<PaperPage />} />
+        <Route path="/paper/:paper" element={<PaperPage />} />
         <Route path="/explore-3d" element={<ExplorePage />} />
         <Route path="/animations" element={<AnimationsPage />} />
         <Route
