@@ -20,11 +20,22 @@ export default function VisualizationDetailPage() {
       <div className="viz-detail__layout">
         <div className="viz-detail__stage">
           <div className="viz-detail__stage-grid" aria-hidden="true" />
-          <div className="viz-detail__stage-content">
-            <div className="viz-detail__orb">✦</div>
-            <p className="viz-detail__stage-title">ইন্টার্‌যাকটিভ ভিজ্যুয়াল শিগগিরই</p>
-            <p className="viz-detail__stage-copy text-soft">এই জায়গায় ৩ডি মডেল বা অ্যানিমেটেড চিত্র যুক্ত হবে।</p>
-          </div>
+          {visualization.videoSrc ? (
+            <video
+              key={visualization.videoSrc}
+              controls
+              className="viz-detail__video"
+              src={visualization.videoSrc}
+            >
+              Your browser does not support the video tag.
+            </video>
+          ) : (
+            <div className="viz-detail__stage-content">
+              <div className="viz-detail__orb">✦</div>
+              <p className="viz-detail__stage-title">ইন্টার্‌যাকটিভ ভিজ্যুয়াল শিগগিরই</p>
+              <p className="viz-detail__stage-copy text-soft">এই জায়গায় ৩ডি মডেল বা অ্যানিমেটেড চিত্র যুক্ত হবে।</p>
+            </div>
+          )}
         </div>
         <aside className="viz-detail__panel">
           <h2 className="viz-detail__panel-heading">এই ভিজ্যুয়াল সম্পর্কে</h2>
