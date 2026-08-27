@@ -1,7 +1,16 @@
 import ThemeToggle from './ThemeToggle.jsx'
+import { useAuth } from '../../hooks/useAuth.js'
 import './Header.css'
 
-export default function Header({ sidebarOpen, onToggleSidebar }) {
+export default function Header({ sidebarOpen, onToggleSidebar, onOpenLogin, onOpenSignup }) {
+  const { isAuthenticated, getDisplayName, getAvatarUrl, signOut } = useAuth()
+  const displayName = getDisplayName()
+
+  const getInitial = () => {
+    if (displayName) return displayName.charAt(0).toUpperCase()
+    return 'U'
+  }
+
   return (
     <header className="site-header">
       <div className="site-header__inner">
@@ -20,14 +29,56 @@ export default function Header({ sidebarOpen, onToggleSidebar }) {
           </svg>
         </button>
 
-        {/* Spacer to keep hamburger left, actions right */}
+        {/* Brand in Header */}
+        <div className="site-header__brand">
+          <span className="site-header__brand-title">জীববিজ্ঞান</span>
+          <span className="site-header__brand-badge">HSC Bio</span>
+        </div>
+
+        {/* Spacer */}
         <div className="site-header__spacer" />
 
-        {/* Right: theme only */}
+        {/* Right actions */}
         <div className="site-header__actions">
+          {isAuthenticated ? (
+            <div className="header-user">
+              <div className="header-user__avatar">
+                {getAvatarUrl() ? (
+                  <img src={getAvatarUrl()} alt={displayName} />
+                ) : (
+                  getInitial()
+                )}
+              </div>
+              <span className="header-user__name">{displayName}</span>
+              <button
+                type="button"
+                className="header-auth-btn header-auth-btn--logout"
+                onClick={() => signOut()}
+                title="সাইন আউট"
+              >
+                সাইন আউট
+              </button>
+            </div>
+          ) : (
+            <button
+              type="button"
+              className="header-auth-btn header-auth-btn--login"
+              onClick={onOpenLogin}
+              title="লগইন করুন"
+            >
+              <img
+                src="/heart-login.png"
+                alt="হৃদপিণ্ড"
+                className="header-heart-icon"
+              />
+              <span>লগইন</span>
+            </button>
+          )}
+
           <ThemeToggle />
         </div>
       </div>
     </header>
   )
 }
+

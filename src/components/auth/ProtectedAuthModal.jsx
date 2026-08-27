@@ -15,10 +15,13 @@ export default function ProtectedAuthModal({ isOpen, onClose, onLogin, onSignup 
 
   // Body scroll lock
   useEffect(() => {
-    if (!isOpen) return
+    if (!isOpen) {
+      document.body.style.overflow = ''
+      return
+    }
     const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = prev }
+    return () => { document.body.style.overflow = prev || '' }
   }, [isOpen])
 
   if (!isOpen) return null

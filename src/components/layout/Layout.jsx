@@ -74,6 +74,8 @@ export default function Layout({ children }) {
         <Header
           sidebarOpen={sidebarOpen}
           onToggleSidebar={() => setSidebarOpen((open) => !open)}
+          onOpenLogin={openLogin}
+          onOpenSignup={openSignup}
         />
         <main className="app-main fade-in" key={location.pathname}>
           {children}
