@@ -60,6 +60,22 @@ export function ProgressProvider({ children }) {
     }
   }, [])
 
+  // On logout: immediately cancel pending saves and clear progress state
+  // This prevents User A's stale data from persisting if User B logs in next
+  useEffect(() => {
+    if (!isAuthenticated && !user) {
+      // Cancel any pending debounced save
+      if (saveTimerRef.current) {
+        clearTimeout(saveTimerRef.current)
+        saveTimerRef.current = null
+      }
+      // Discard unsaved queue — don't write User A's data to User B's session
+      saveQueueRef.current = {}
+      // Reset migration flag for the next user
+      migratedRef.current = false
+    }
+  }, [isAuthenticated, user])
+
   // Load progress when auth state changes
   useEffect(() => {
     if (authLoading) return
@@ -116,8 +132,15 @@ export function ProgressProvider({ children }) {
           }
         }
       } else {
-        // Guest: load from localStorage
-        setProgress(readLocalProgress())
+        // Logged out or guest: clear progress immediately, then read from localStorage
+        // AuthContext.signOut already cleared localStorage before calling supabase.auth.signOut,
+        // so readLocalProgress() will return {} for the next user
+        setProgress({})
+        // Read localStorage as fallback (handles direct token expiry / tab reload while logged out)
+        const local = readLocalProgress()
+        if (Object.keys(local).length > 0) {
+          setProgress(local)
+        }
         migratedRef.current = false
       }
 

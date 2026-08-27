@@ -3,6 +3,18 @@ import { supabase } from '../lib/supabase.js'
 
 export const AuthContext = createContext(null)
 
+// Keys used by other contexts for user-scoped storage
+const PROGRESS_STORAGE_KEY = 'hsc-biology-progress-v1'
+const LOGIN_PROMPT_KEY = 'hsc-biology-login-prompted'
+
+function clearAllUserStorage() {
+  // Clear user-scoped localStorage
+  try { localStorage.removeItem(PROGRESS_STORAGE_KEY) } catch { /* ignore */ }
+
+  // Clear user-scoped sessionStorage
+  try { sessionStorage.removeItem(LOGIN_PROMPT_KEY) } catch { /* ignore */ }
+}
+
 export function AuthProvider({ children }) {
   const [session, setSession] = useState(null)
   const [user, setUser] = useState(null)
@@ -81,7 +93,13 @@ export function AuthProvider({ children }) {
   }, [])
 
   const signOut = useCallback(async () => {
+    // Clear all user-specific storage BEFORE Supabase signout
+    // so ProgressContext sees empty localStorage when it re-runs its load effect
+    clearAllUserStorage()
+
     const { error } = await supabase.auth.signOut()
+    setSession(null)
+    setUser(null)
     setProfile(null)
     return { error }
   }, [])

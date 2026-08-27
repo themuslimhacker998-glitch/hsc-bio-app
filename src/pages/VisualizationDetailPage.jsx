@@ -2,12 +2,21 @@ import { Navigate, useParams } from 'react-router-dom'
 import { getVisualization } from '../data/chapters.js'
 import Breadcrumbs from '../components/common/Breadcrumbs.jsx'
 import Badge from '../components/common/Badge.jsx'
+import VideoPlayer from '../components/VideoPlayer.jsx'
+import MitosisVisualization from '../components/mitosis/MitosisVisualization.jsx'
 import './VisualizationDetailPage.css'
+
+// Map of chapter+visualization IDs to interactive components
+const INTERACTIVE_VISUALIZATIONS = {
+  'kosh-bivajon:visual-1': MitosisVisualization,
+}
 
 export default function VisualizationDetailPage() {
   const { chapterSlug, visualizationId } = useParams()
   const { chapter, visualization } = getVisualization(chapterSlug, visualizationId)
   if (!chapter || !visualization) return <Navigate to="/not-found" replace />
+
+  const InteractiveViz = INTERACTIVE_VISUALIZATIONS[`${chapterSlug}:${visualizationId}`]
 
   return (
     <div className="container viz-detail" data-accent={chapter.accent}>
@@ -21,14 +30,15 @@ export default function VisualizationDetailPage() {
         <div className="viz-detail__stage">
           <div className="viz-detail__stage-grid" aria-hidden="true" />
           {visualization.videoSrc ? (
-            <video
+            <VideoPlayer
               key={visualization.videoSrc}
-              controls
-              className="viz-detail__video"
               src={visualization.videoSrc}
-            >
-              Your browser does not support the video tag.
-            </video>
+              title={visualization.title}
+            />
+          ) : InteractiveViz ? (
+            <div className="viz-detail__stage-content viz-detail__stage-content--interactive">
+              <InteractiveViz />
+            </div>
           ) : (
             <div className="viz-detail__stage-content">
               <div className="viz-detail__orb">✦</div>

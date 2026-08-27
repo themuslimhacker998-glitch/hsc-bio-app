@@ -77,6 +77,12 @@
   padding: 24px;
 }
 
+.viz-detail__stage-content--interactive {
+  width: 100%;
+  padding: 0;
+  min-height: 420px;
+}
+
 .viz-detail__stage-title {
   font-family: var(--font-display);
   font-size: 1.1rem;
