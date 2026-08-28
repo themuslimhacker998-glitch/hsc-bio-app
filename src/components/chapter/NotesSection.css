@@ -4,4 +4,6 @@
 .notes-preview h3 { font-size:1.1rem; margin-bottom:4px; }
 .notes-preview p { color:var(--ink-soft); font-size:.92rem; }
 .notes-preview__badge { margin-left:auto; color:var(--accent); font-size:.82rem; font-weight:700; white-space:nowrap; }
-@media(max-width:600px){.notes-preview{align-items:flex-start}.notes-preview__badge{margin-left:0}}
+.notes-preview__open { margin-left:auto; color:var(--accent); font-size:.88rem; font-weight:700; white-space:nowrap; padding:8px 14px; border:1px solid var(--accent); border-radius:999px; transition:background .2s,color .2s; }
+.notes-preview__open:hover { background:var(--accent-soft); }
+@media(max-width:600px){.notes-preview{align-items:flex-start;flex-wrap:wrap}.notes-preview__badge,.notes-preview__open{margin-left:0}}

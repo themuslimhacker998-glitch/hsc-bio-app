@@ -1,0 +1,333 @@
+/* ------------------------------------------------------------------ */
+/* Notebook — Bangla study-notebook UI                                  */
+/* ------------------------------------------------------------------ */
+
+.notebook-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+/* Header */
+.notebook-header {
+  margin-bottom: 24px;
+}
+
+.notebook-back {
+  display: inline-block;
+  font-size: 0.88rem;
+  color: var(--accent-chlorophyll);
+  margin-bottom: 10px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.notebook-back:hover { opacity: 0.75; }
+
+.notebook-title {
+  font-size: clamp(1.3rem, 1rem + 1vw, 1.7rem);
+  color: var(--ink);
+}
+
+/* Notebook body — the "book" */
+.notebook-body {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* Spiral binding dots along the left edge */
+.notebook-spine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 28px;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, var(--line-strong) 3px, transparent 3px);
+  background-size: 28px 36px;
+  background-position: 0 14px;
+}
+
+/* Page stack (holds pages + shadow) */
+.notebook-page-stack {
+  position: relative;
+  margin-left: 28px;
+  min-height: 520px;
+}
+
+/* Individual page */
+.notebook-page {
+  position: relative;
+  min-height: 520px;
+  background: #fdfbf5;
+  overflow-y: auto;
+  animation: nb-page-in 0.35s var(--ease-out) both;
+}
+
+[data-theme='dark'] .notebook-page {
+  background: var(--surface);
+}
+
+/* Red margin line */
+.notebook-page__margin {
+  position: absolute;
+  top: 0;
+  left: 48px;
+  width: 2px;
+  height: 100%;
+  background: rgba(220, 60, 60, 0.25);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Page content area */
+.notebook-page__content {
+  padding: 36px 40px 24px 72px;
+  min-height: 460px;
+}
+
+/* Page footer with number */
+.notebook-page__footer {
+  padding: 0 40px 20px 72px;
+}
+
+.notebook-page__number {
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+}
+
+/* Page-turn exit animations */
+.notebook-page--exit-left {
+  animation: nb-page-out-left 0.35s var(--ease-out) both;
+}
+.notebook-page--exit-right {
+  animation: nb-page-out-right 0.35s var(--ease-out) both;
+}
+
+@keyframes nb-page-in {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes nb-page-out-left {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(-32px); }
+}
+@keyframes nb-page-out-right {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(32px); }
+}
+
+/* Navigation controls */
+.notebook-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 12px;
+}
+
+.notebook-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s, opacity 0.2s;
+  white-space: nowrap;
+}
+.notebook-nav-btn:hover:not(:disabled) {
+  background: var(--accent-chlorophyll-soft);
+}
+.notebook-nav-btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.notebook-page-indicator {
+  font-size: 0.85rem;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.notebook-empty {
+  text-align: center;
+  padding: 80px 24px;
+}
+.notebook-empty p {
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+  margin-bottom: 20px;
+}
+
+/* ------------------------------------------------------------------ */
+/* Markdown prose inside the notebook page                             */
+/* ------------------------------------------------------------------ */
+.notebook-prose h1 {
+  font-size: 1.45rem;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--line);
+}
+
+.notebook-prose h2 {
+  font-size: 1.25rem;
+  margin: 28px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line);
+}
+
+.notebook-prose h3 {
+  font-size: 1.1rem;
+  margin: 22px 0 8px;
+}
+
+.notebook-prose h4 {
+  font-size: 1rem;
+  margin: 18px 0 6px;
+}
+
+.notebook-prose p {
+  margin-bottom: 12px;
+  line-height: 1.8;
+}
+
+.notebook-prose strong {
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.notebook-prose em {
+  font-style: italic;
+}
+
+.notebook-prose a {
+  color: var(--accent-chlorophyll);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.notebook-prose ul,
+.notebook-prose ol {
+  padding-left: 24px;
+  margin-bottom: 14px;
+}
+.notebook-prose ul { list-style: disc; }
+.notebook-prose ol { list-style: decimal; }
+
+.notebook-prose li {
+  margin-bottom: 5px;
+  line-height: 1.7;
+  padding-left: 4px;
+}
+
+.notebook-prose blockquote {
+  margin: 14px 0;
+  padding: 12px 18px;
+  border-left: 3px solid var(--accent-chlorophyll);
+  background: var(--accent-chlorophyll-soft);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.notebook-prose pre {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  overflow-x: auto;
+  margin: 14px 0;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  line-height: 1.6;
+}
+
+.notebook-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  background: var(--bg);
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.notebook-prose pre code {
+  background: none;
+  padding: 0;
+}
+
+.notebook-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 0.9rem;
+}
+
+.notebook-prose th,
+.notebook-prose td {
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  text-align: left;
+}
+
+.notebook-prose th {
+  background: var(--accent-chlorophyll-soft);
+  font-weight: 600;
+}
+
+.notebook-prose tr:nth-child(even) td {
+  background: rgba(0, 0, 0, 0.015);
+}
+
+[data-theme='dark'] .notebook-prose tr:nth-child(even) td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.notebook-prose hr {
+  border: none;
+  height: 1px;
+  background: var(--line);
+  margin: 24px 0;
+}
+
+.notebook-prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-sm);
+  margin: 14px 0;
+  border: 1px solid var(--line);
+}
+
+/* ------------------------------------------------------------------ */
+/* Responsive                                                           */
+/* ------------------------------------------------------------------ */
+@media (max-width: 600px) {
+  .notebook-wrap { padding: 16px 10px 48px; }
+
+  .notebook-spine { width: 18px; background-size: 18px 32px; }
+
+  .notebook-page-stack { margin-left: 18px; min-height: 420px; }
+
+  .notebook-page__margin { left: 24px; }
+
+  .notebook-page__content {
+    padding: 24px 16px 16px 36px;
+  }
+
+  .notebook-page__footer {
+    padding: 0 16px 16px 36px;
+  }
+
+  .notebook-controls { flex-wrap: wrap; justify-content: center; }
+
+  .notebook-nav-btn { padding: 8px 14px; font-size: 0.85rem; }
+}

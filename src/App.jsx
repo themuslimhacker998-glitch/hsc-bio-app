@@ -2,6 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import Layout from './components/layout/Layout.jsx'
 import HomePage from './pages/HomePage.jsx'
 import ChapterPage from './pages/ChapterPage.jsx'
+import Notebook from './components/notebook/Notebook.jsx'
 import VisualizationDetailPage from './pages/VisualizationDetailPage.jsx'
 import PaperPage from './pages/PaperPage.jsx'
 import ExplorePage from './pages/ExplorePage.jsx'
@@ -15,6 +16,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/chapter/:chapterSlug" element={<ChapterPage />} />
+        <Route path="/chapter/:chapterSlug/notes" element={<Notebook />} />
         <Route path="/paper/:paper" element={<PaperPage />} />
         <Route path="/explore-3d" element={<ExplorePage />} />
         <Route path="/animations" element={<AnimationsPage />} />
