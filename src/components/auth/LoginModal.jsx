@@ -18,6 +18,8 @@ function AnatomicalHeartGraphic({ heartState }) {
       ? 'heart-beat--surge'
       : heartState === 'focused'
       ? 'heart-beat--fast'
+      : heartState === 'success'
+      ? 'heart-beat--success'
       : 'heart-beat--idle'
 
   return (
@@ -27,6 +29,12 @@ function AnatomicalHeartGraphic({ heartState }) {
         alt=""
         className={`heart-anatomy-img ${beatClass}`}
       />
+      {heartState === 'success' && (
+        <div className="heart-like-emoji-container">
+          <div className="heart-like-glow-ring" />
+          <span className="heart-like-emoji">👍</span>
+        </div>
+      )}
     </div>
   )
 }
@@ -43,18 +51,18 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
   const [serverError, setServerError] = useState('')
   const [loading, setLoading] = useState(false)
 
-  // Cardiac pulse speed: 'idle' | 'focused' | 'submitting'
+  // Cardiac pulse speed: 'idle' | 'focused' | 'submitting' | 'success'
   const [heartState, setHeartState] = useState('idle')
 
   // Escape key handler
   useEffect(() => {
     if (!isOpen) return
     const handleKey = (e) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape' && !loading && heartState !== 'success') onClose()
     }
     document.addEventListener('keydown', handleKey)
     return () => document.removeEventListener('keydown', handleKey)
-  }, [isOpen, onClose])
+  }, [isOpen, onClose, loading, heartState])
 
   // Body scroll lock with guaranteed restoration
   useEffect(() => {
@@ -90,7 +98,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
     return errors
   }
 
-  // Handle Form Submit with cardiac pulse surge
+  // Handle Form Submit with cardiac pulse surge and success animation
   const handleSubmit = async (e) => {
     e.preventDefault()
     setServerError('')
@@ -115,10 +123,13 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
         setServerError(msg || 'লগইন করতে সমস্যা হয়েছে। কিছুক্ষণ পর চেষ্টা করুন।')
       }
     } else {
-      setHeartState('idle')
-      setEmail('')
-      setPassword('')
-      onClose()
+      setHeartState('success')
+      setTimeout(() => {
+        setEmail('')
+        setPassword('')
+        setHeartState('idle')
+        onClose()
+      }, 2200)
     }
   }
 
@@ -133,12 +144,20 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
   if (!isOpen) return null
 
   return createPortal(
-    <div className="heart-login-overlay" onClick={onClose}>
+    <div
+      className="heart-login-overlay"
+      onClick={() => {
+        if (!loading && heartState !== 'success') onClose()
+      }}
+    >
       <div className="heart-login-scene" onClick={(e) => e.stopPropagation()}>
         {/* Close Button */}
         <button
-          className="heart-close-btn"
-          onClick={onClose}
+          className={`heart-close-btn${heartState === 'success' ? ' heart-close-btn--success' : ''}`}
+          onClick={() => {
+            if (!loading && heartState !== 'success') onClose()
+          }}
+          disabled={loading || heartState === 'success'}
           aria-label="লগইন বন্ধ করুন"
           type="button"
         >
@@ -152,7 +171,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
         <AnatomicalHeartGraphic heartState={heartState} />
 
         {/* Login Form Panel (Document Flow Layer inside the Heart) */}
-        <div className="heart-form-panel">
+        <div className={`heart-form-panel${heartState === 'success' ? ' heart-form-panel--success' : ''}`}>
           {/* Badge */}
           <div className="heart-form-badge">
             <span className="heart-ecg-dot" />
@@ -204,6 +223,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
                   onBlur={handleBlur}
                   autoComplete="email"
                   autoFocus
+                  disabled={loading || heartState === 'success'}
                 />
               </div>
               {fieldErrors.email && <span className="heart-field__error">{fieldErrors.email}</span>}
@@ -233,6 +253,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
                   onFocus={handleFocus}
                   onBlur={handleBlur}
                   autoComplete="current-password"
+                  disabled={loading || heartState === 'success'}
                 />
                 <button
                   type="button"
@@ -240,6 +261,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
                   onClick={() => setShowPassword(!showPassword)}
                   aria-label={showPassword ? 'পাসওয়ার্ড লুকাও' : 'পাসওয়ার্ড দেখাও'}
                   tabIndex={-1}
+                  disabled={loading || heartState === 'success'}
                 >
                   {showPassword ? (
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -261,7 +283,7 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
             <button
               type="submit"
               className={`heart-submit${loading ? ' heart-submit--loading' : ''}`}
-              disabled={loading}
+              disabled={loading || heartState === 'success'}
             >
               {loading ? (
                 <>
@@ -284,7 +306,11 @@ export default function LoginModal({ isOpen, onClose, onSwitchToSignup }) {
           {/* Switch to Signup */}
           <div className="heart-switch">
             অ্যাকাউন্ট নেই?{' '}
-            <button type="button" onClick={onSwitchToSignup}>
+            <button
+              type="button"
+              onClick={onSwitchToSignup}
+              disabled={loading || heartState === 'success'}
+            >
               এখানে অ্যাকাউন্ট তৈরি করো
             </button>
           </div>

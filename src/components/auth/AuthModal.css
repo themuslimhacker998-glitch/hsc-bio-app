@@ -480,6 +480,43 @@
     drop-shadow(0 0 50px rgba(160, 20, 30, 0.3));
 }
 
+/* Success Emoji Transition */
+.heart-like-emoji-container {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.heart-like-emoji {
+  font-size: 110px;
+  filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.4));
+  animation: emoji-pop-in 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes emoji-pop-in {
+  0% { transform: scale(0) rotate(-20deg); opacity: 0; }
+  60% { transform: scale(1.2) rotate(10deg); opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+.heart-like-glow-ring {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 4px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 40px rgba(255, 255, 255, 0.6);
+  animation: glow-ring-pulse 1.8s ease-out infinite;
+}
+
+@keyframes glow-ring-pulse {
+  0% { transform: scale(0.5); opacity: 1; }
+  100% { transform: scale(2.5); opacity: 0; }
+}
+
 
 /* Natural Human Cardiac Double Beat (Systole-Diastole Rhythm) */
 /* 1. Idle Beat (Normal resting rate) */
@@ -521,6 +558,15 @@
   100% { transform: scale(1); }
 }
 
+/* 4. Success State (Slow fade/pulse) */
+.heart-beat--success {
+  animation: heart-fade-success 1.5s ease-out forwards;
+}
+@keyframes heart-fade-success {
+  0% { transform: scale(1); opacity: 0.9; filter: brightness(1); }
+  100% { transform: scale(1.05); opacity: 0.3; filter: brightness(0.5) grayscale(0.5); }
+}
+
 /* Flowing blood stream inside vessels */
 .blood-flow-dash {
   animation: blood-stream 1.5s linear infinite;
@@ -547,6 +593,19 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.heart-form-panel--success {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
+
+.heart-close-btn--success {
+  opacity: 0;
+  transform: scale(0.5);
+  pointer-events: none;
 }
 
 /* ---- Badge / ECG Pulsing Status ---- */
