@@ -9,12 +9,13 @@ export default function AnimationsPage() {
       <div className="media-grid">
         {CHAPTERS.map((chapter) => {
           const animation = chapter.visualizations[1] || chapter.visualizations[0]
+          const previewSrc = Array.isArray(animation.videos) ? animation.videos[0].src : animation.videoSrc
           return (
             <Link className="media-card" to={`/chapter/${chapter.slug}/visualization/${animation.id}`} key={chapter.slug}>
               <div className="media-card__visual media-card__visual--animation">
-                {animation.videoSrc ? (
+                {previewSrc ? (
                   <video
-                    src={animation.videoSrc}
+                    src={previewSrc}
                     muted
                     autoPlay
                     loop

@@ -29,10 +29,10 @@ export default function VisualizationDetailPage() {
       <div className="viz-detail__layout">
         <div className="viz-detail__stage">
           <div className="viz-detail__stage-grid" aria-hidden="true" />
-          {visualization.videoSrc ? (
+          {visualization.videos || visualization.videoSrc ? (
             <VideoPlayer
-              key={visualization.videoSrc}
-              src={visualization.videoSrc}
+              key={visualization.videoSrc || (visualization.videos || []).map((v) => v.src).join('|')}
+              src={visualization.videos || visualization.videoSrc}
               title={visualization.title}
             />
           ) : InteractiveViz ? (
